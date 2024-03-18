@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
 import type { UploadFile, UploadProps } from 'antd';
+import Image from 'next/image';
 
 type FileType = File;
 
@@ -79,7 +80,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = ({ onImageChange }) => {
         {fileList.length >= 3 ? null : uploadButton}
       </Upload>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        <Image alt="example" src={previewImage} layout="responsive" width={500} height={500} />
       </Modal>
     </>
   );

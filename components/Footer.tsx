@@ -1,4 +1,4 @@
-export default function() {
+export default function Footer() {
     return(
         <footer className=" mt-24 bg-white rounded-lg shadow dark:bg-green-500 m-4">
             <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">

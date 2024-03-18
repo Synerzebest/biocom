@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Carousel from 'react-material-ui-carousel';
-import {toast, Toaster} from 'react-hot-toast'
+import {toast, Toaster} from 'react-hot-toast';
+import Image from 'next/image';
 
 interface ShopCardProps {
   name: string;
@@ -32,7 +33,7 @@ export default function ShopCard({ name, city, address, products, photos, produc
 
       <Carousel animation="slide">
         {photos.map((photo, index) => (
-          <img key={index} src={photo} alt={`Photo ${index}`} style={{ maxWidth: '100%', height: 'auto' }} />
+          <Image key={index} src={photo} alt={`Photo ${index}`} layout='responsive' width={100} height={100}/>
         ))}
       </Carousel>
       <div className="flex flex-col gap-4">
