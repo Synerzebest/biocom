@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 export default function() {
     return(
         <footer className=" mt-24 bg-white rounded-lg shadow dark:bg-green-500 m-4">
@@ -10,16 +8,16 @@ export default function() {
                     </p>
                     <ul className="flex flex-wrap items-center mb-6 text-sm font-medium sm:mb-0">
                         <li>
-                            <Link href="#" className="hover:underline me-4 md:me-6 text-white">About</Link>
+                            <p className="hover:underline me-4 md:me-6 text-white">About</p>
                         </li>
                         <li>
-                            <Link href="#" className="hover:underline me-4 md:me-6 text-white">Politique de confidentialité</Link>
+                            <p className="hover:underline me-4 md:me-6 text-white">Politique de confidentialité</p>
                         </li>
                         <li>
-                            <Link href="#" className="hover:underline me-4 md:me-6 text-white">Licence</Link>
+                            <p className="hover:underline me-4 md:me-6 text-white">Licence</p>
                         </li>
                         <li>
-                            <Link href="#" className="hover:underline text-white">Contact</Link>
+                            <p className="hover:underline text-white">Contact</p>
                         </li>
                     </ul>
                 </div>
