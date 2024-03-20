@@ -49,7 +49,7 @@ const SearchCity: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col gap-[5rem]">
+        <div className="flex flex-col gap-[5rem] w-screen">
             <div className="flex flex-col gap-2 items-center">
                 <AutoComplete
                     options={options}
@@ -62,24 +62,26 @@ const SearchCity: React.FC = () => {
                     Rechercher
                 </button>
             </div>
-            {loading ? (
-                <div className="flex items-center gap-2 bg-green-500 p-4 rounded-xl justify-center text-white font-bold">
-                    <p className="text-lg">Chargement</p>
-                    <Spin indicator={<LoadingOutlined spin className="text-white" />} />
-                </div>
-            ) : (
-                locations.map((location, index) => (
-                    <ShopCard
-                        key={index}
-                        name={location.name}
-                        city={location.city}
-                        address={location.address}
-                        products={location.products}
-                        photos={location.photos}
-                        productionPlace={location.productionPlace}
-                    />
-                ))
-            )}
+            <div className="w-[90%] flex flex-row flex-wrap gap-8 justify-center mx-auto">
+                {loading ? (
+                    <div className="flex items-center gap-2 bg-green-500 p-4 rounded-xl justify-center text-white font-bold">
+                        <p className="text-lg">Chargement</p>
+                        <Spin indicator={<LoadingOutlined spin className="text-white" />} />
+                    </div>
+                ) : (
+                    locations.map((location, index) => (
+                        <ShopCard
+                            key={index}
+                            name={location.name}
+                            city={location.city}
+                            address={location.address}
+                            products={location.products}
+                            photos={location.photos}
+                            productionPlace={location.productionPlace}
+                        />
+                    ))
+                )}
+            </div>
         </div>
     );
 };

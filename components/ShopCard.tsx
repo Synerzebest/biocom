@@ -33,7 +33,9 @@ export default function ShopCard({ name, city, address, products, photos, produc
 
       <Carousel animation="slide">
         {photos.map((photo, index) => (
-          <Image key={index} src={photo} alt={`Photo ${index}`} layout='responsive' width={100} height={100}/>
+          <div key={index} className="flex items-center justify-center">
+            <Image src={photo} alt={`Photo ${index}`} layout='responsive' width={100} height={100}/>
+          </div>
         ))}
       </Carousel>
       <div className="flex flex-col gap-4">
