@@ -59,7 +59,7 @@ const SearchCity: React.FC = () => {
     return (
         <div className="flex flex-col gap-[5rem] w-screen">
             <div className="flex flex-col gap-2 items-center">
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center sm:flex-row flex-col">
                     <AutoComplete
                         options={options}
                         style={{ width: 250, height: 50 }}
