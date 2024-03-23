@@ -40,7 +40,7 @@ export default function ShopCard({ name, city, address, products, photos, produc
         ))}
       </Carousel>
       <div className="flex flex-col gap-4">
-        <p className="font-bold">Secteurs d'activité</p>
+        <p className="font-bold">Secteurs d&apos;activité</p>
         <ul>
           {sectors.map((sector, index) => (
             <li key={index}>{sector}</li>
