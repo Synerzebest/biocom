@@ -10,9 +10,10 @@ interface ShopCardProps {
   products: string[];
   photos: string[];
   productionPlace: string;
+  sectors: string[];
 }
 
-export default function ShopCard({ name, city, address, products, photos, productionPlace }: ShopCardProps) {
+export default function ShopCard({ name, city, address, products, photos, productionPlace, sectors }: ShopCardProps) {
 
   const handleCopyAddress = () => {
     const tempInput = document.createElement('input');
@@ -38,6 +39,14 @@ export default function ShopCard({ name, city, address, products, photos, produc
           </div>
         ))}
       </Carousel>
+      <div className="flex flex-col gap-4">
+        <p className="font-bold">Secteurs d'activité</p>
+        <ul>
+          {sectors.map((sector, index) => (
+            <li key={index}>{sector}</li>
+          ))}
+        </ul>
+      </div>
       <div className="flex flex-col gap-4">
         <p className="font-bold">Produits vendus</p>
         <ul>

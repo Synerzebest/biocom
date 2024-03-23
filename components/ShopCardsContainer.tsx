@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { z, ZodError } from 'zod';
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Skeleton } from "antd";
 import ShopCard from './ShopCard';
 
 type Location = {
@@ -14,6 +13,7 @@ type Location = {
     productionPlace: string;
     products: string[];
     photos: string[];
+    sectors: string[];
 };
 
 export default function ShopCardsContainer() {
@@ -27,7 +27,8 @@ export default function ShopCardsContainer() {
         city: z.string(),
         productionPlace: z.string(),
         products: z.array(z.string()),
-        photos: z.array(z.string())
+        photos: z.array(z.string()),
+        sectors: z.array(z.string())
     });
 
     useEffect(() => {
@@ -56,7 +57,7 @@ export default function ShopCardsContainer() {
                 setLocations(sortedLocations);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching announcements:', error);
+                console.error('Error fetching locations:', error);
             }
         }
         fetchLocations();
@@ -66,18 +67,31 @@ export default function ShopCardsContainer() {
     return(
         <div className="flex flex-col gap-[50px] items-center">
             <div>
-                <p className="text-xl font-bold text-center">Découvrez des commerces écoresponsables</p>
+                <p className="text-xl font-bold text-center">Découvrez le commerce qui vous convient</p>
             </div>
             <div className="w-[90%] flex flex-wrap gap-8 justify-center mx-auto">
                 
                 {loading ? (
-                    <div className="flex items-center gap-2 bg-green-500 p-4 rounded-xl justify-center text-white font-bold">
-                        <p className="text-lg">Chargement</p>
-                        <Spin indicator={<LoadingOutlined spin className="text-white" />} />
+                    <div className="w-[90%] flex flex-row flex-wrap gap-8 justify-center mx-auto">
+                    <div className="w-1/4 min-w-[250px] flex flex-col gap-4 py-[15px]">
+                        <Skeleton active/>
+                        <Skeleton.Image active/> 
+                        <Skeleton active />
                     </div>
+                    <div className="w-1/4 min-w-[250px] flex flex-col gap-4 py-[15px]">
+                        <Skeleton active/>
+                        <Skeleton.Image active/> 
+                        <Skeleton active />
+                    </div>
+                    <div className="w-1/4 min-w-[250px] flex flex-col gap-4 py-[15px]">
+                        <Skeleton active/>
+                        <Skeleton.Image active/> 
+                        <Skeleton active />
+                    </div>
+                </div>
                 ) : (
                     locations.map((location, index) => (
-                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} />
+                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} />
                     ))
                 )}
 

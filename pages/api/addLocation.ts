@@ -10,6 +10,7 @@ interface LocationData {
   productionPlace: string;
   products: string[];
   photos: string; 
+  sectors: string[];
 }
 
 export const config = { api: { bodyParser: { sizeLimit: '25mb' } } }
@@ -28,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       client = await MongoClient.connect(url);
       const db = client.db('database');
 
-      const { name, address, city, productionPlace, products, photos } = req.body;
+      const { name, address, city, productionPlace, products, photos, sectors } = req.body;
 
       const existingLocation = await db.collection('locations').findOne({ name });
 
@@ -44,7 +45,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         city: city,
         productionPlace: productionPlace,
         products: products,
-        photos: photos
+        photos: photos,
+        sectors: sectors
       };
 
       await db.collection('locations').insertOne(location);

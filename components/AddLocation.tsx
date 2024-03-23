@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { AddLocationProps } from '@/types';
 import UploadPhoto from './UploadPhoto';
 import { useState } from 'react';
-import { categories } from '@/constants';
+import { categories, sectors } from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -21,13 +21,15 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
         productionPlace: string;
         products: string[];
         photos: string[];
+        sectors: string[];
     }>({
         name: '',
         address: '',
         city: '',
         productionPlace: '',
         products: [],
-        photos: []
+        photos: [],
+        sectors: []
     });
 
     const [addedImages, setAddedImages] = useState<Set<string>>(new Set());
@@ -62,6 +64,18 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
         setFormData(prevState => ({
             ...prevState,
             products: updateProducts
+        }));
+    };
+
+    const handleSectorChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const sectorChecked = e.target.value;
+        const updateSectors = (formData.sectors as string[]).includes(sectorChecked)
+            ? formData.products.filter(item => item !== sectorChecked)
+            : [...formData.sectors, sectorChecked];
+        
+        setFormData(prevState => ({
+            ...prevState,
+            sectors: updateSectors
         }));
     };
 
@@ -152,6 +166,16 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
                                             <Checkbox key={index} value={category.value} onChange={handleCheckboxChange}>{category.label}</Checkbox>
                                         ))}
                                     </CheckboxGroup>
+
+                                    <div>
+                                        <CheckboxGroup
+                                        label="Secteur(s)"
+                                        >
+                                            {sectors.map((sector, index) => (
+                                                <Checkbox key={index} value={sector.value} onChange={handleSectorChange}>{sector.label}</Checkbox>
+                                            ))}
+                                        </CheckboxGroup>
+                                    </div>
 
                                     <div className="flex flex-col gap-4 justify-center">
                                         <p className="text-md text-foreground-500">Ajoutez une photo</p>

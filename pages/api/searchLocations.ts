@@ -9,10 +9,11 @@ interface LocationData {
   productionPlace: string;
   products: string[];
   photos: string[];
+  sectors: string[];
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { city } = req.query;
+  const { city, sector } = req.query;
   const url = process.env.MONGODB_URI;
 
   if (!url) {
@@ -22,11 +23,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const client = await MongoClient.connect(url);
     const db = client.db('database');
-    const locations = await db.collection<LocationData>('locations').find({ city: new RegExp(city as string, 'i') }).toArray();
+    const locations = db.collection<LocationData>('locations');
+
+    const sectorsArray = Array.isArray(sector) ? sector : [sector];
+
+    const filteredLocations = await locations.find({
+      city: new RegExp(city as string, 'i'),
+      sectors: { $all: sectorsArray }
+    }).toArray();
+
     client.close();
-    res.status(200).json({ locations });
+    res.status(200).json({ locations: filteredLocations });
   } catch (error) {
     console.error('Error fetching locations:', error);
     res.status(500).json({ message: 'An error occurred while fetching locations' });
   }
 }
+
