@@ -6,7 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bionest",
+  title: "LocalNest",
   description: "Trouvez des magasins à proximité de chez vous qui vendent des produits locaux",
 };
 
