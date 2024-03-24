@@ -12,7 +12,7 @@ export default function Home() {
       <UserBtn />
 
       <div className="fixed bottom-2 right-2 z-10 shadow rounded-lg">
-        <button onClick={() => setIsOpen(true)} className="bg-green-500 text-white p-4 rounded-lg relative font-bold hover:bg-green-600">Ajouter un commerce</button>
+        <button onClick={() => setIsOpen(true)} className="bg-green-500 text-white p-4 rounded-lg relative font-bold hover:bg-green-600">Ajouter mon commerce</button>
         <AddLocation isOpen={isOpen} closeModal={() => setIsOpen(false)}/>
       </div>
 
