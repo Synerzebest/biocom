@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     if (sector) {
       const sectorsArray = Array.isArray(sector) ? sector : [sector];
-      if (sectorsArray.length > 0) {
+      if (sectorsArray.length > 0) { // Si le secteur est non vide
         filter.sectors = { $all: sectorsArray };
       }
     }
