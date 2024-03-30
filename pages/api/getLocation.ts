@@ -3,6 +3,12 @@ import { MongoClient } from 'mongodb';
 
 let cachedDb: any = null;
 
+export const config = {
+    api: {
+      responseLimit: false,
+    },
+}
+
 async function connectToDatabase(uri: string) {
     if (cachedDb) {
         return cachedDb;
@@ -24,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         try {
             const db = await connectToDatabase(url);
-            const locations = await db.collection('locations').find({}).toArray();
+            const locations = await db.collection('locations').find({validate: true}).toArray();
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(locations);
         } catch (error) {

@@ -35,7 +35,7 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
     const [addedImages, setAddedImages] = useState<Set<string>>(new Set());
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,

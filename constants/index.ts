@@ -62,3 +62,5 @@ export const categories = [
   { value: 'Vêtements', label: 'Vêtements' },
   { value: 'Autres', label: 'Autres' },
 ];
+
+export const adminPass = process.env.ADMIN_PASS;
