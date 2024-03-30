@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import toast, { Toaster } from "react-hot-toast";
 import { jwtDecode } from 'jwt-decode';
 import { ValidateShops, Footer } from "@/components";
+import Link from "next/link";
 
 export default function Page() {
     const [password, setPassword] = useState<string>("");
@@ -72,11 +73,16 @@ export default function Page() {
                 {able ? (
                     <>
                         <div className="w-screen flex justify-center my-4 relative z-10">
-                            <p className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-green-600 via-green-500 to-green-700">Local</p>
-                            <p className="text-7xl font-bold text-slate-700">Nest</p>
+                            <Link href="/" className="flex justify-center">
+                                <p className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-green-600 via-green-500 to-green-700">Local</p>
+                                <p className="text-7xl font-bold text-slate-700">Nest</p>
+                            </Link>
+                            
                         </div>
-                        
-                        <ValidateShops />
+
+                        <div className="w-screen">
+                            <ValidateShops />
+                        </div>
                     </>
                 ) : (
                     <div className="w-11/12 h-screen sm:w-[80%] m-auto flex flex-col items-center justify-center gap-4">

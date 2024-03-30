@@ -83,8 +83,8 @@ const ValidateShops = () => {
 
 
     return (
-        <div className="flex flex-col items-center gap-[50px]">
-            <div>
+        <div className="flex flex-col items-start gap-[50px]">
+            <div className="pl-[50px] pt-10">
                <p className="text-xl font-bold text-center">Shops à valider</p> 
             </div>
 
