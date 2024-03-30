@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         try {
             const db = await connectToDatabase(url);
-            const locations = await db.collection('locations').find({validate: true}).toArray();
+            const locations = await db.collection('locations').find().toArray();
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(locations);
         } catch (error) {
