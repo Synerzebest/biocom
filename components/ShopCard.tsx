@@ -11,19 +11,11 @@ interface ShopCardProps {
   photos: string[];
   productionPlace: string;
   sectors: string[];
+  buttonText: string;
+  onClick: () => void;
 }
 
-export default function ShopCard({ name, city, address, products, photos, productionPlace, sectors }: ShopCardProps) {
-
-  const handleCopyAddress = () => {
-    const tempInput = document.createElement('input');
-    tempInput.value = `${address}, ${city}`;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand('copy');
-    document.body.removeChild(tempInput);
-    toast.success('Adresse copiée dans le presse-papiers');
-  };
+export default function ShopCard({ name, city, address, products, photos, productionPlace, sectors, buttonText, onClick }: ShopCardProps) {
 
   return (
     <div className="w-[350px] flex flex-col justify-between gap-4 shadow-lg p-4 rounded-lg">
@@ -61,9 +53,9 @@ export default function ShopCard({ name, city, address, products, photos, produc
         <p>{productionPlace}</p>
       </div>
       
-      <button type="button" onClick={handleCopyAddress}>
+      <button type="button" onClick={onClick}>
           <div className="flex items-center gap-2 bg-green-500 p-4 rounded-xl justify-center text-white font-bold hover:bg-green-600">
-              Copier l&apos;adresse
+              {buttonText}
           </div>
       </button>
       <Toaster />

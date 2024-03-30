@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         sectors: sectors
       };
 
-      await db.collection('locations').insertOne(location);
+      await db.collection('unvalidated-locations').insertOne(location);
 
       res.status(201).json({ message: 'Location added successfully' });
 

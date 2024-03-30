@@ -1,10 +1,10 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 import { z, ZodError } from 'zod';
 import { Skeleton } from "antd";
 import ShopCard from './ShopCard';
-import toast, { Toaster } from "react-hot-toast";
+import toast, {Toaster} from "react-hot-toast";
 
 type Location = {
     id: string;
@@ -18,9 +18,8 @@ type Location = {
     onClick: () => void;
 };
 
-export default function ShopCardsContainer() {
-    const [locations, setLocations] = useState<Location[]>([]);
-
+const ValidateShops = () => {
+    const [unvalidatedLocations, setUnvalidatedLocations] = useState<Location[]>([]);
     const [loading, setLoading] = useState(true);
 
     const locationSchema = z.object({
@@ -36,7 +35,7 @@ export default function ShopCardsContainer() {
     useEffect(() => {
         async function fetchLocations() {
             try {
-                const response = await fetch('/api/getLocation');
+                const response = await fetch('/api/getUnvalidatedLocations');
                 if (!response.ok) {
                     throw new Error('An error occurred while fetching the locations');
                 }
@@ -56,7 +55,7 @@ export default function ShopCardsContainer() {
                 }).filter(Boolean) as Location[];
 
                 const sortedLocations = validatedLocations.reverse();
-                setLocations(sortedLocations);
+                setUnvalidatedLocations(sortedLocations);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching locations:', error);
@@ -65,23 +64,36 @@ export default function ShopCardsContainer() {
         fetchLocations();
     }, [locationSchema]);
 
-    const handleCopyAddress = (address: string, city: string) => {
-        const tempInput = document.createElement('input');
-        tempInput.value = `${address}, ${city}`;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        toast.success('Adresse copiée dans le presse-papiers');
+    const handleValidateLocation = async (id: string) => {
+        try {
+            const response = await fetch(`/api/validateLocations`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }),
+            });
+            if (!response.ok) {
+                throw new Error('Failed to validate location');
+            }
+            const updatedLocations = unvalidatedLocations.filter(location => location.id !== id);
+            setUnvalidatedLocations(updatedLocations);
+            toast.success('Shop validé')
+        } catch (error) {
+            console.error('Error validating location:', error);
+            toast.error('Une erreur est survenue lors de la validation')
+        }
     };
 
-    return(
-        <div className="flex flex-col gap-[50px] items-center">
-            <div>
-                <p className="text-xl font-bold text-center">Découvrez le commerce qui vous convient</p>
+
+    return (
+        <div className="flex flex-col items-start gap-[50px]">
+            <div className="pl-[50px] pt-10">
+               <p className="text-xl font-bold text-center">Shops à valider</p> 
             </div>
+
             <div className="w-[90%] flex flex-wrap gap-8 justify-center mx-auto">
-                
+            
                 {loading ? (
                     <div className="w-[90%] flex flex-row flex-wrap gap-8 justify-center mx-auto">
                         <div className="w-1/4 min-w-[250px] flex flex-col gap-4 py-[15px]">
@@ -101,12 +113,14 @@ export default function ShopCardsContainer() {
                         </div>
                     </div>
                 ) : (
-                    locations.map((location, index) => (
-                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} onClick={() => handleCopyAddress(location.address, location.city)}  buttonText="Copier l&apos;adresse" />
+                    unvalidatedLocations.map((location, index) => (
+                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} buttonText="Valider" onClick={() => handleValidateLocation(location.id)} />
                     ))
                 )}
+                <Toaster />
             </div>
-            <Toaster />
         </div>
     )
 }
+
+export default ValidateShops;
