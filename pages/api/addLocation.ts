@@ -11,6 +11,7 @@ interface LocationData {
   products: string[];
   photos: string; 
   sectors: string[];
+  validate: boolean;
 }
 
 export const config = { api: { bodyParser: { sizeLimit: '25mb' } } }
@@ -46,7 +47,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         productionPlace: productionPlace,
         products: products,
         photos: photos,
-        sectors: sectors
+        sectors: sectors,
+        validate: false
       };
 
       await db.collection('locations').insertOne(location);

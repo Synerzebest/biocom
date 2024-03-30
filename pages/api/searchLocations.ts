@@ -25,12 +25,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const db = client.db('database');
     const locations = db.collection<LocationData>('locations');
 
-    const sectorsArray = Array.isArray(sector) ? sector : [sector];
+    const filter: any = {};
+    if (city) {
+      filter.city = new RegExp(city as string, 'i');
+    }
+    if (sector) {
+      const sectorsArray = Array.isArray(sector) ? sector : [sector];
+      if (sectorsArray.length > 0) {
+        filter.sectors = { $all: sectorsArray };
+      }
+    }
+    
+    if (!city) {
+      delete filter.city;
+    }
 
-    const filteredLocations = await locations.find({
-      city: new RegExp(city as string, 'i'),
-      sectors: { $all: sectorsArray }
-    }).toArray();
+    const filteredLocations = await locations.find(filter).toArray();
 
     client.close();
     res.status(200).json({ locations: filteredLocations });

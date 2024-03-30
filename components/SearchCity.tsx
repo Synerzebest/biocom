@@ -31,7 +31,6 @@ const SearchCity: React.FC = () => {
     };
 
     const handleSearch = async () => {
-        if (searchValue.trim() === '') return;
 
         setLoading(true);
         try {

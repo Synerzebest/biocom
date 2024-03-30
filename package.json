@@ -28,6 +28,8 @@
     "image-compression": "^0.0.6",
     "image-compressor": "^2.0.3",
     "image-compressor.js": "^1.1.4",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "mongodb": "^6.5.0",
     "next": "14.1.1",
     "next-auth": "^4.24.7",

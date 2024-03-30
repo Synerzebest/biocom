@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { MongoClient } from 'mongodb';
+import { NextApiRequest, NextApiResponse } from "next";
+import { MongoClient } from "mongodb";
 
 let cachedDb: any = null;
 
 export const config = {
     api: {
-      responseLimit: false,
-    },
+        responseLimit: false
+    }
 }
 
 async function connectToDatabase(uri: string) {
@@ -20,8 +20,8 @@ async function connectToDatabase(uri: string) {
     return db;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    if (req.method === "GET") {
+export default async function handler(req:NextApiRequest, res:NextApiResponse) {
+    if(req.method === "GET") {
         const url = process.env.MONGODB_URI || "";
 
         if (!url) {
@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         try {
             const db = await connectToDatabase(url);
-            const locations = await db.collection('locations').find({validate: true}).toArray();
+            const locations = await db.collection('locations').find({validate: false}).toArray();
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(locations);
         } catch (error) {
@@ -38,6 +38,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.status(500).json({ message: 'Error connecting to MongoDB' });
         }
     } else {
-        res.status(400).json({ message: "Method unauthorized" });
+        console.log("Method unauthorized")
     }
 }
