@@ -13,7 +13,6 @@ type Location = {
     city: string;
     productionPlace: string;
     products: string[];
-    photos: string[];
     sectors: string[];
 };
 
@@ -27,7 +26,6 @@ const ValidateShops = () => {
         city: z.string(),
         productionPlace: z.string(),
         products: z.array(z.string()),
-        photos: z.array(z.string()),
         sectors: z.array(z.string())
     });
 
@@ -92,7 +90,7 @@ const ValidateShops = () => {
                     </div>
                 ) : (
                     unvalidatedLocations.map((location, index) => (
-                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} />
+                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} />
                     ))
                 )}
                 <Toaster />

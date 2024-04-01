@@ -19,7 +19,6 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
         city: string;
         productionPlace: string;
         products: string[];
-        photos: string[];
         sectors: string[];
     }>({
         name: '',
@@ -27,7 +26,6 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
         city: '',
         productionPlace: '',
         products: [],
-        photos: [],
         sectors: []
     });
 
@@ -40,18 +38,6 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
             ...prevState,
             [name]: value
         }));
-    };
-
-    const handleImageChange = (base64Images: string[]) => {
-        const uniqueImages = base64Images.filter(image => !addedImages.has(image));
-        setFormData(prevState => ({
-          ...prevState,
-          photos: [...prevState.photos, ...uniqueImages]
-        }));
-        
-        const imagesArray = Array.from(addedImages);
-        const newImagesSet = new Set([...imagesArray, ...uniqueImages]);
-        setAddedImages(newImagesSet);
     };
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
