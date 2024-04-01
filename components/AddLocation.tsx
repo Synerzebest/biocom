@@ -1,13 +1,12 @@
 "use client"
 
-import { Fragment, ChangeEvent } from 'react';
+import { Fragment, ChangeEvent, useState } from 'react';
 import { Dialog, Transition } from "@headlessui/react";
 import Image from 'next/image';
 import {CheckboxGroup, Checkbox} from "@nextui-org/react";
 import TextField from '@mui/material/TextField';
 import { AddLocationProps } from '@/types';
 import UploadPhoto from './UploadPhoto';
-import { useState } from 'react';
 import { categories, sectors } from '@/constants';
 import toast, {Toaster} from 'react-hot-toast';
 import { Spin } from "antd";
@@ -96,7 +95,7 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
                 throw new Error('An error occurred while adding the location');
             }
 
-            toast.success('Commerce ajouté avec succès');
+            toast.success('Votre commerce est en attente de vérification');
 
         } catch (error) {
             console.error('Error:', error);
@@ -134,7 +133,7 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
                         leaveFrom='opacity-100 scale-100'
                         leaveTo='opacity-0 scale-95'
                         >
-                        <Dialog.Panel className='relative w-full max-w-lg max-h-[90vh] overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5'>
+                        <Dialog.Panel className='no-scrollbar relative w-full max-w-lg max-h-[90vh] overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5'>
                             <button
                             type='button'
                             className='absolute top-2 right-2 z-10 w-fit p-2 bg-primary-blue-100 rounded-full'
@@ -177,10 +176,10 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
                                         </CheckboxGroup>
                                     </div>
 
-                                    <div className="flex flex-col gap-4 justify-center">
+                                    {/* <div className="flex flex-col gap-4 justify-center">
                                         <p className="text-md text-foreground-500">Ajoutez une photo</p>
                                         <UploadPhoto onImageChange={handleImageChange}/>
-                                    </div>
+                                    </div> */}
 
                                     <p className="text-sm text-gray-500">ⓘ Ajouter une photo aide à référencer le commerce</p>
 

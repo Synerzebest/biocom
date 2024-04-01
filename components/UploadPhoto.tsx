@@ -77,7 +77,7 @@ const UploadPhoto: React.FC<UploadPhotoProps> = ({ onImageChange }) => {
         onPreview={handlePreview}
         onChange={handleChange}
       >
-        {fileList.length >= 3 ? null : uploadButton}
+        {fileList.length >= 1 ? null : uploadButton}
       </Upload>
       <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
         <Image alt="example" src={previewImage} layout="responsive" width={500} height={500} />

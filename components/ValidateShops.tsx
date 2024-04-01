@@ -15,7 +15,6 @@ type Location = {
     products: string[];
     photos: string[];
     sectors: string[];
-    onClick: () => void;
 };
 
 const ValidateShops = () => {
@@ -64,27 +63,6 @@ const ValidateShops = () => {
         fetchLocations();
     }, [locationSchema]);
 
-    const handleValidateLocation = async (id: string) => {
-        try {
-            const response = await fetch(`/api/validateLocations`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id }),
-            });
-            if (!response.ok) {
-                throw new Error('Failed to validate location');
-            }
-            const updatedLocations = unvalidatedLocations.filter(location => location.id !== id);
-            setUnvalidatedLocations(updatedLocations);
-            toast.success('Shop validé')
-        } catch (error) {
-            console.error('Error validating location:', error);
-            toast.error('Une erreur est survenue lors de la validation')
-        }
-    };
-
 
     return (
         <div className="flex flex-col items-start gap-[50px]">
@@ -114,7 +92,7 @@ const ValidateShops = () => {
                     </div>
                 ) : (
                     unvalidatedLocations.map((location, index) => (
-                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} buttonText="Valider" onClick={() => handleValidateLocation(location.id)} />
+                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} />
                     ))
                 )}
                 <Toaster />

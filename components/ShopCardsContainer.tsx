@@ -13,7 +13,6 @@ type Location = {
     city: string;
     productionPlace: string;
     products: string[];
-    photos: string[];
     sectors: string[];
     onClick: () => void;
 };
@@ -29,7 +28,6 @@ export default function ShopCardsContainer() {
         city: z.string(),
         productionPlace: z.string(),
         products: z.array(z.string()),
-        photos: z.array(z.string()),
         sectors: z.array(z.string())
     });
 
@@ -102,7 +100,7 @@ export default function ShopCardsContainer() {
                     </div>
                 ) : (
                     locations.map((location, index) => (
-                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} photos={location.photos} productionPlace={location.productionPlace} sectors={location.sectors} onClick={() => handleCopyAddress(location.address, location.city)}  buttonText="Copier l&apos;adresse" />
+                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} />
                     ))
                 )}
             </div>

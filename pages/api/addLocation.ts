@@ -9,9 +9,7 @@ interface LocationData {
   city: string;
   productionPlace: string;
   products: string[];
-  photos: string; 
   sectors: string[];
-  validate: boolean;
 }
 
 export const config = { api: { bodyParser: { sizeLimit: '25mb' } } }
@@ -30,6 +28,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       client = await MongoClient.connect(url);
       const db = client.db('database');
 
+      await db.collection('locations').createIndex({ name: 1 });
+      await db.collection('locations').createIndex({ city: 1 });
+      await db.collection('locations').createIndex({ sectors: 1 });
+
       const { name, address, city, productionPlace, products, photos, sectors } = req.body;
 
       const existingLocation = await db.collection('locations').findOne({ name });
@@ -46,9 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         city: city,
         productionPlace: productionPlace,
         products: products,
-        photos: photos,
         sectors: sectors,
-        validate: false
       };
 
       await db.collection('unvalidated-locations').insertOne(location);

@@ -7,3 +7,14 @@ export interface AddLocationProps {
     isOpen: boolean;
     closeModal: () => void;
 }
+
+export interface ShopDetailsProps {
+    isOpen: boolean;
+    closeModal: () => void;
+    name: string;
+    city: string;
+    address: string;
+    products: string[];
+    productionPlace: string;
+    sectors: string[];
+}
