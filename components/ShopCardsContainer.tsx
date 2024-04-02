@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { z, ZodError } from 'zod';
 import { Skeleton } from "antd";
 import ShopCard from './ShopCard';
@@ -22,56 +22,55 @@ export default function ShopCardsContainer() {
 
     const [loading, setLoading] = useState(true);
 
-    const locationSchema = z.object({
+    const locationSchema = useMemo(() =>
+    z.object({
         name: z.string(),
         address: z.string(),
         city: z.string(),
         productionPlace: z.string(),
         products: z.array(z.string()),
         sectors: z.array(z.string())
-    });
+    }), []
+);
 
     useEffect(() => {
         async function fetchLocations() {
             try {
-                const response = await fetch('/api/getLocation');
-                if (!response.ok) {
-                    throw new Error('An error occurred while fetching the locations');
-                }
-                const data: any[] = await response.json();
-
-                const validatedLocations = data.map((location: any) => {
-                    try {
-                        locationSchema.parse(location);
-
-                        return { ...location };
-                    } catch (error) {
-                        if (error instanceof ZodError) {
-                            console.error('Invalid location:', error);
-                        }
-                        return null;
+                const cachedLocations = localStorage.getItem('cachedLocations');
+                if (cachedLocations) {
+                    setLocations(JSON.parse(cachedLocations));
+                    setLoading(false);
+                } else {
+                    const response = await fetch('/api/getLocation');
+                    if (!response.ok) {
+                        throw new Error('An error occurred while fetching the locations');
                     }
-                }).filter(Boolean) as Location[];
+                    const data: any[] = await response.json();
 
-                const sortedLocations = validatedLocations.reverse();
-                setLocations(sortedLocations);
-                setLoading(false);
+                    const validatedLocations = data.map((location: any) => {
+                        try {
+                            locationSchema.parse(location);
+
+                            return { ...location };
+                        } catch (error) {
+                            if (error instanceof ZodError) {
+                                console.error('Invalid location:', error);
+                            }
+                            return null;
+                        }
+                    }).filter(Boolean) as Location[];
+
+                    const sortedLocations = validatedLocations.reverse();
+                    setLocations(sortedLocations);
+                    localStorage.setItem('cachedLocations', JSON.stringify(sortedLocations));
+                    setLoading(false);
+                }
             } catch (error) {
                 console.error('Error fetching locations:', error);
             }
         }
         fetchLocations();
     }, [locationSchema]);
-
-    const handleCopyAddress = (address: string, city: string) => {
-        const tempInput = document.createElement('input');
-        tempInput.value = `${address}, ${city}`;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        toast.success('Adresse copiée dans le presse-papiers');
-    };
 
     return(
         <div className="flex flex-col gap-[50px] items-center">
