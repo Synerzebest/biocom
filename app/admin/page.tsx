@@ -77,7 +77,6 @@ export default function Page() {
                                 <p className="text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-green-600 via-green-500 to-green-700">Local</p>
                                 <p className="text-7xl font-bold text-slate-700">Nest</p>
                             </Link>
-                            
                         </div>
 
                         <div className="w-screen">

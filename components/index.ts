@@ -1,5 +1,5 @@
 import Hero from './Hero';
-import AddLocation from './AddLocation';
+import AddLocationButton from './AddLocationButton';
 import ShopCardsContainer from './ShopCardsContainer';
 import SearchCity from './SearchCity';
 import Footer from './Footer';
@@ -8,7 +8,7 @@ import ValidateShops from './ValidateShops';
 
 export {
     Hero,
-    AddLocation,
+    AddLocationButton,
     ShopCardsContainer,
     SearchCity,
     UserBtn,

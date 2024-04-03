@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await db.collection('locations').createIndex({ city: 1 });
       await db.collection('locations').createIndex({ sectors: 1 });
 
-      const { name, address, city, productionPlace, products, photos, sectors } = req.body;
+      const { name, address, city, productionPlace, products, sectors } = req.body;
 
       const existingLocation = await db.collection('locations').findOne({ name });
 
