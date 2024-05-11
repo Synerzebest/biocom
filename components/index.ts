@@ -5,6 +5,7 @@ import SearchCity from './SearchCity';
 import Footer from './Footer';
 import UserBtn from './UserBtn';
 import ValidateShops from './ValidateShops';
+import LocationStepper from "./LocationStepper";
 
 export {
     Hero,
@@ -13,5 +14,6 @@ export {
     SearchCity,
     UserBtn,
     ValidateShops,
+    LocationStepper,
     Footer
 }

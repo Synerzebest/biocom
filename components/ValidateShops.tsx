@@ -5,19 +5,11 @@ import { z, ZodError } from 'zod';
 import { Skeleton } from "antd";
 import ShopCard from './ShopCard';
 import toast, {Toaster} from "react-hot-toast";
+import { LocationDataProps } from "@/types";
 
-type Location = {
-    id: string;
-    name: string;
-    address: string;
-    city: string;
-    productionPlace: string;
-    products: string[];
-    sectors: string[];
-};
 
 const ValidateShops = () => {
-    const [unvalidatedLocations, setUnvalidatedLocations] = useState<Location[]>([]);
+    const [unvalidatedLocations, setUnvalidatedLocations] = useState<LocationDataProps[]>([]);
     const [loading, setLoading] = useState(true);
 
     const locationSchema = z.object({
@@ -26,7 +18,8 @@ const ValidateShops = () => {
         city: z.string(),
         productionPlace: z.string(),
         products: z.array(z.string()),
-        sectors: z.array(z.string())
+        sectors: z.array(z.string()),
+        imageUrl: z.string()
     });
 
     useEffect(() => {
@@ -49,7 +42,7 @@ const ValidateShops = () => {
                         }
                         return null;
                     }
-                }).filter(Boolean) as Location[];
+                }).filter(Boolean) as LocationDataProps[];
 
                 const sortedLocations = validatedLocations.reverse();
                 setUnvalidatedLocations(sortedLocations);
@@ -90,7 +83,7 @@ const ValidateShops = () => {
                     </div>
                 ) : (
                     unvalidatedLocations.map((location, index) => (
-                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} />
+                            <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} imageUrl={location.imageUrl} />
                     ))
                 )}
                 <Toaster />

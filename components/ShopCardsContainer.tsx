@@ -5,20 +5,11 @@ import { z, ZodError } from 'zod';
 import { Skeleton } from "antd";
 import ShopCard from './ShopCard';
 import toast, { Toaster } from "react-hot-toast";
+import { LocationDataProps } from "@/types";
 
-type Location = {
-    id: string;
-    name: string;
-    address: string;
-    city: string;
-    productionPlace: string;
-    products: string[];
-    sectors: string[];
-    onClick: () => void;
-};
 
 export default function ShopCardsContainer() {
-    const [locations, setLocations] = useState<Location[]>([]);
+    const [locations, setLocations] = useState<LocationDataProps[]>([]);
 
     const [loading, setLoading] = useState(true);
 
@@ -29,7 +20,8 @@ export default function ShopCardsContainer() {
         city: z.string(),
         productionPlace: z.string(),
         products: z.array(z.string()),
-        sectors: z.array(z.string())
+        sectors: z.array(z.string()),
+        imageUrl: z.string()
     }), []
 );
 
@@ -58,7 +50,7 @@ export default function ShopCardsContainer() {
                             }
                             return null;
                         }
-                    }).filter(Boolean) as Location[];
+                    }).filter(Boolean) as LocationDataProps[];
 
                     const sortedLocations = validatedLocations.reverse();
                     setLocations(sortedLocations);
@@ -99,7 +91,7 @@ export default function ShopCardsContainer() {
                     </div>
                 ) : (
                     locations.map((location, index) => (
-                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} />
+                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} imageUrl={location.imageUrl} />
                     ))
                 )}
             </div>

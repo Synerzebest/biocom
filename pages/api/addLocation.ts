@@ -1,16 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { MongoClient } from 'mongodb';
 import { v4 as uuidv4 } from 'uuid';
-
-interface LocationData {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  productionPlace: string;
-  products: string[];
-  sectors: string[];
-}
+import { LocationDataProps } from "../../types";
 
 export const config = { api: { bodyParser: { sizeLimit: '25mb' } } }
 
@@ -32,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await db.collection('locations').createIndex({ city: 1 });
       await db.collection('locations').createIndex({ sectors: 1 });
 
-      const { name, address, city, productionPlace, products, sectors } = req.body;
+      const { name, address, city, productionPlace, products, sectors, imageUrl } = req.body;
 
       const existingLocation = await db.collection('locations').findOne({ name });
 
@@ -41,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ message: 'A location with the same name already exists' });
       }
 
-      const location: LocationData = {
+      const location: LocationDataProps = {
         id: uuidv4(),
         name: name,
         address: address,
@@ -49,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         productionPlace: productionPlace,
         products: products,
         sectors: sectors,
+        imageUrl: imageUrl, 
       };
 
       await db.collection('unvalidated-locations').insertOne(location);

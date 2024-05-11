@@ -18,3 +18,14 @@ export interface ShopDetailsProps {
     productionPlace: string;
     sectors: string[];
 }
+
+export interface LocationDataProps {
+    id: string;
+    name: string;
+    address: string;
+    city: string;
+    productionPlace: string;
+    products: string[];
+    sectors: string[];
+    imageUrl: string;
+  }

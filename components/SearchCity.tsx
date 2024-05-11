@@ -5,21 +5,13 @@ import { AutoComplete, Select, Skeleton } from 'antd';
 import { cities, sectors } from '@/constants';
 import ShopCard from './ShopCard';
 import toast, { Toaster } from "react-hot-toast";
+import { LocationDataProps } from '@/types';
 
-type Location = {
-    id: string;
-    name: string;
-    address: string;
-    city: string;
-    productionPlace: string;
-    products: string[];
-    sectors: string[]
-};
 
 const SearchCity: React.FC = () => {
     const [options, setOptions] = useState<{ value: string }[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-    const [locations, setLocations] = useState<Location[]>([]);
+    const [locations, setLocations] = useState<LocationDataProps[]>([]);
     const [searchValue, setSearchValue] = useState<string>('');
     const [searchSector, setSearchSector] = useState<string>('');
 
@@ -53,16 +45,6 @@ const SearchCity: React.FC = () => {
 
     const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
-    const handleCopyAddress = (address: string, city: string) => {
-        const tempInput = document.createElement('input');
-        tempInput.value = `${address}, ${city}`;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        toast.success('Adresse copiée dans le presse-papiers');
-    };
 
 
     return (
@@ -114,7 +96,7 @@ const SearchCity: React.FC = () => {
                     </div>
                 ) : (
                     locations?.map((location, index) => (
-                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} />
+                        <ShopCard key={index} name={location.name} city={location.city} address={location.address} products={location.products} productionPlace={location.productionPlace} sectors={location.sectors} imageUrl={location.imageUrl} />
                     ))
                 )}
             </div>

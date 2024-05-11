@@ -1,6 +1,5 @@
 "use client"
 
-import Carousel from 'react-material-ui-carousel';
 import Image from 'next/image';
 import ShopDetails from "./ShopDetails"
 import { useState, useEffect, MouseEventHandler } from "react";
@@ -8,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import toast, { Toaster } from "react-hot-toast";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { LocationDataProps} from "@/types";
 
 interface ShopCardProps {
   name: string;
@@ -16,22 +16,13 @@ interface ShopCardProps {
   products: string[];
   productionPlace: string;
   sectors: string[];
+  imageUrl: string;
 }
 
-type Location = {
-  id: string;
-  name: string;
-  address: string;
-  city: string;
-  productionPlace: string;
-  products: string[];
-  sectors: string[];
-};
-
-export default function ShopCard({ name, city, address, products, productionPlace, sectors }: ShopCardProps) {
+export default function ShopCard({ name, city, address, products, productionPlace, sectors, imageUrl }: ShopCardProps) {
   const [token, setToken] = useState<string | null>(null);
   const [able, setAble] = useState<boolean>(false);
-  const [unvalidatedLocations, setUnvalidatedLocations] = useState<Location[]>([]);
+  const [unvalidatedLocations, setUnvalidatedLocations] = useState<LocationDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -105,14 +96,10 @@ export default function ShopCard({ name, city, address, products, productionPlac
         <p className="text-xl">{name}</p>
         <p className="text-sm text-gray-500">{address}, {city}</p>
       </div>
-  
-      {/* <Carousel animation="slide">
-        {photos.map((photo, index) => (
-          <div key={index} className="flex items-center justify-center">
-            <Image src={photo} alt={`Photo ${index}`} layout='responsive' width={100} height={100}/>
-          </div>
-        ))}
-      </Carousel> */}
+
+      <div className="flex items-center justify-center">
+        <Image src={imageUrl} alt="photo du magasin" layout='responsive' width={100} height={100}/>
+      </div>
   
       <div className="flex flex-col gap-4">
         <p className="font-bold">Produits vendus</p>
