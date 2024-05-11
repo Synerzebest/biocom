@@ -258,7 +258,7 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
                                             ))}
                                         </CheckboxGroup>
                                     </div>
-                                    {stepThree ? null : <p className="text-sm text-red-600">Secteurs d'activité non indiqués</p>}
+                                    {stepThree ? null : <p className="text-sm text-red-600">Secteurs d&apos;activité non indiqués</p>}
 
                                     <button type="submit" disabled={isLoading}>
                                         {isLoading ? (
