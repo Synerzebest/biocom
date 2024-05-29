@@ -62,6 +62,12 @@ export default function ShopCardsContainer() {
             }
         }
         fetchLocations();
+
+        const intervalId = setInterval(() => {
+            fetchLocations();
+        }, 3600000)
+
+        return () => clearInterval(intervalId);
     }, [locationSchema]);
 
     return(
