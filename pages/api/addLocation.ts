@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await db.collection('locations').createIndex({ city: 1 });
       await db.collection('locations').createIndex({ sectors: 1 });
 
-      const { name, address, city, productionPlace, products, sectors, imageUrl } = req.body;
+      const { name, address, city, productionPlace, products, sectors, imageUrl, authorMail } = req.body;
 
       const existingLocation = await db.collection('locations').findOne({ name });
 
@@ -41,6 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         products: products,
         sectors: sectors,
         imageUrl: imageUrl, 
+        authorMail: authorMail
       };
 
       await db.collection('unvalidated-locations').insertOne(location);

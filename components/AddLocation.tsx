@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, ChangeEvent, useState } from 'react';
+import { Fragment, ChangeEvent, useState, useEffect } from 'react';
 import { Dialog, Transition } from "@headlessui/react";
 import Image from 'next/image';
 import {CheckboxGroup, Checkbox} from "@nextui-org/react";
@@ -12,6 +12,7 @@ import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { ref, uploadBytesResumable, UploadTaskSnapshot, getDownloadURL } from "@firebase/storage";
 import { storage } from '@/utils/firebase';
+import { useUser } from "@clerk/nextjs";
 
 const ImageUpload: React.FC<{ onImageUpload: (imageUrl: string) => void }> = ({ onImageUpload }) => {
     const [image, setImage] = useState<File | null>(null);
@@ -84,6 +85,7 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
     const [stepThree, setStepThree] = useState<boolean>(false);
     const [stepFour, setStepFour] = useState<boolean>(false);
 
+    const { user } = useUser();
 
     const [formData, setFormData] = useState<{
         name: string;
@@ -93,6 +95,7 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
         products: string[];
         sectors: string[];
         imageUrl: string;
+        authorMail: string;
     }>({
         name: '',
         address: '',
@@ -100,8 +103,23 @@ const AddLocation = ({ isOpen, closeModal }: AddLocationProps) => {
         productionPlace: '',
         products: [],
         sectors: [],
-        imageUrl: ''
+        imageUrl: '',
+        authorMail: ""
     });
+
+    useEffect(() => {
+        const getCookieValue = (name: string) => {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop()?.split(';').shift();
+        };
+
+        const userEmail = getCookieValue('email') || "";
+        setFormData(prevState => ({
+            ...prevState,
+            authorMail: userEmail
+        }));
+    }, []);
 
     const [isLoading, setIsLoading] = useState(false);
 

@@ -2,8 +2,10 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
+const firebaseApiKey = process.env.FIREBASE_API_KEY
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBsCUala2lhSuZbxUKlH5aNEm8ZSD2j6PQ",
+  apiKey: firebaseApiKey,
   authDomain: "localnest-b8aaa.firebaseapp.com",
   projectId: "localnest-b8aaa",
   storageBucket: "localnest-b8aaa.appspot.com",

@@ -28,4 +28,5 @@ export interface LocationDataProps {
     products: string[];
     sectors: string[];
     imageUrl: string;
+    authorMail: string;
   }
